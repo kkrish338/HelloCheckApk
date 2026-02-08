@@ -23,7 +23,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-setuptools python3-wheel git zip openjdk-17-jdk
           pip install --upgrade pip
-          pip install buildozer==1.5.0 python-for-android==2024.01.01 cython
+          pip install buildozer==1.5.0 python-for-android==2024.1.21 cython
 
       - name: Accept Android SDK licenses
         run: |
