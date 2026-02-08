@@ -28,6 +28,10 @@ android.sdk = 33
 android.ndk = 25b
 android.build_tools = 33.0.0
 
+# Use system SDK instead of buildozer SDK
+
+android.sdk_path = $ANDROID_SDK_ROOT
+android.ndk_path = $ANDROID_NDK_HOME
 # (str) Android entry point, default is ok
 #android.entrypoint = org.kivy.android.PythonActivity
 
