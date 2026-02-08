@@ -37,10 +37,14 @@ jobs:
         run: |
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "build-tools;36.1.0"
 
+      - name: Accept Android SDK licenses (after build-tools)
+        run: |
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
       - name: Build APK
         run: |
           pip install -r requirements.txt
-          buildozer android debug
+          buildozer --no_https android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
