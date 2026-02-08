@@ -53,6 +53,12 @@ jobs:
       - name: Fix pip user install issue
         run: |
           echo "PYTHONNOUSERSITE=1" >> $GITHUB_ENV
+
+      - name: Force pip global install mode
+        run: |
+          mkdir -p ~/.config/pip
+          echo "[global]" > ~/.config/pip/pip.conf
+          echo "user = false" >> ~/.config/pip/pip.conf
       - name: Build APK
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
