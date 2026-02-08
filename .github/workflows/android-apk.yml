@@ -56,5 +56,4 @@ jobs:
           ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
           ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
         run: |
-          ./venv/bin/python -m buildozer android clean
           ./venv/bin/python -m buildozer -v android debug
