@@ -33,7 +33,7 @@ android.permissions = INTERNET
 #android.archs = armeabi-v7a, arm64-v8a, x86, x86_64
 
 # (str) Path to a custom icon
-icon.filename = icon.png
+# icon.filename = icon.png
 
 # (str) Presplash of the application
 #presplash.filename = presplash.png
