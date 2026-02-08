@@ -21,7 +21,12 @@ icon.filename = icon.png
 android.permissions = INTERNET
 
 # (str) Android NDK version to use
-#android.ndk = 25b
+
+# (str) Android build tools version to use
+android.build_tools_version = 34.0.0
+
+# (int) Android API to use
+android.api = 34
 
 # (str) Android SDK version to use
 #android.sdk = 33
