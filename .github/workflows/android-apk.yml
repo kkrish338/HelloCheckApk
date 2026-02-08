@@ -43,28 +43,13 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Buildozer (Python 3.10 venv)
+      - name: Install Buildozer globally (NO venv)
         run: |
-          python -m venv venv
-          source venv/bin/activate
           python -m pip install --upgrade pip
-          pip install "cython<3" buildozer
+          pip install --user "cython<3" buildozer
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Fix pip user install issue
-        run: |
-          echo "PYTHONNOUSERSITE=1" >> $GITHUB_ENV
-
-      - name: Force pip global install mode
-        run: |
-          mkdir -p ~/.config/pip
-          echo "[global]" > ~/.config/pip/pip.conf
-          echo "user = false" >> ~/.config/pip/pip.conf
       - name: Build APK
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
-          ANDROID_NDK_HOME: ${{ env.ANDROID_SDK_ROOT }}/ndk/25.2.9519653
         run: |
-          export PATH=$PWD/venv/bin:$PATH
           cython --version
           buildozer -v android debug
