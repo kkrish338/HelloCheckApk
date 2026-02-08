@@ -22,7 +22,6 @@ android.permissions = INTERNET
 
 # (str) Android NDK version to use
 
-# Android build configuration
 android.api = 33
 android.minapi = 21
 android.sdk = 33

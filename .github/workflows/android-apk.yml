@@ -13,39 +13,56 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      name: Build Android APK
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip python3-setuptools python3-wheel git zip openjdk-17-jdk
-          pip install --upgrade pip
-          pip install buildozer==1.5.0 python-for-android==2024.1.21 cython
+      on:
+        push:
+          branches: [ main ]
+        pull_request:
+          branches: [ main ]
 
+      jobs:
+        build-apk:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Accept Android licenses
-        run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10'
 
-      - name: Install Android SDK packages
-        run: |
-          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.0"
+            - name: Install dependencies
+              run: |
+                sudo apt-get update
+                sudo apt-get install -y python3-pip python3-setuptools python3-wheel git zip openjdk-17-jdk
+                pip install --upgrade pip
+                pip install buildozer==1.5.0 python-for-android==2024.1.21 cython
 
+            - name: Setup Android SDK
+              uses: android-actions/setup-android@v3
 
+            - name: Accept Android licenses
+              run: yes | sdkmanager --licenses
 
-      - name: Accept Android SDK licenses (after build-tools)
-        run: |
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
+            - name: Install required Android SDK packages
+              run: |
+                sdkmanager --install \
+                  "platform-tools" \
+                  "platforms;android-33" \
+                  "build-tools;33.0.0"
 
-      - name: Build APK
-        run: |
-          pip install -r requirements.txt
-          buildozer --no_https android debug
+            - name: Export Android SDK path for Buildozer
+              run: echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
 
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: hello-kivy-apk
-          path: bin/*.apk
+            - name: Build APK
+              run: |
+                pip install -r requirements.txt
+                buildozer --no_https android debug
+
+            - name: Upload APK artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: hello-kivy-apk
+                path: bin/*.apk
