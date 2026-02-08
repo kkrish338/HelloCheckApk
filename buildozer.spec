@@ -22,14 +22,12 @@ android.permissions = INTERNET
 
 # (str) Android NDK version to use
 
-# (str) Android build tools version to use
-android.build_tools_version = 33.0.0
-
-# (int) Android API to use
+# Android build configuration
 android.api = 33
-
-# (str) Android SDK version to use
-#android.sdk = 33
+android.minapi = 21
+android.sdk = 33
+android.ndk = 25b
+android.build_tools = 33.0.0
 
 # (str) Android entry point, default is ok
 #android.entrypoint = org.kivy.android.PythonActivity
