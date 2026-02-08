@@ -50,6 +50,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install "cython<3" buildozer
 
+      - name: Fix pip user install issue
+        run: |
+          echo "PYTHONNOUSERSITE=1" >> $GITHUB_ENV
       - name: Build APK
         env:
           ANDROID_HOME: ${{ env.ANDROID_SDK_ROOT }}
